@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+	
+</head>
+
+<body>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+
+
+<!-- 
+No scroll bars
+-->
+<style>
+    html, body {
+        margin:0; padding:0; overflow: hidden;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+
+
+<svg width="100%" height="100%">
+
+
+<script>
+//--onload, onresize----
+function sizeSVG()
+{
+	var mySVG=document.getElementsByTagName("svg")[0]
+
+  	var svgW=window.innerWidth
+	var svgH=window.innerHeight
+
+
+    //mySVG.setAttribute("viewBox",bbx+" "+bby+" "+svgW+" "+svgH )
+	
+    mySVG.setAttribute("width",svgW)
+    mySVG.setAttribute("height",svgH)
+		
+	
+}
+
+document.addEventListener("onload",sizeSVG(),false)
+window.onresize=sizeSVG
+
+
+
+</script>
+
+ 
+<svg preserveAspectRatio="xMidYMid meet"></svg>
+
+<svg>
+
+<g>
+  <rect x="0%" y="0%" width="100%" height="100%" fill="silver" rx="0" ry="0"/>
+   <text id="kahoot" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="80px"; font-style="italic"; font-family="times new roman"; 
+font-weight="bold"; fill="yellow">Kahoot!</text> 
+</g>
+
+
+<g>
+ <rect id="questionr" width="100%" x="0%" fill="white" rx="0px" ry="0px"/>
+  <text id="question" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="black"></text> 
+</g>
+
+
+<g>
+<rect id="gamepinr" width="100%" x="0%" fill="white" rx="0px" ry="0px"/>
+ <text id="gamepin" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="35px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="black"></text> 
+</g>
+
+<g>
+ <rect id="answer-red" fill="red" rx="10px" ry="10px"/>
+ <text id="answer-red-text" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white">50</text> 
+</g>
+
+<g>
+ <rect id="answer-blue" fill="blue" rx="10px" ry="10px"/>
+ <text id="answer-blue-text" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white">50</text> 
+</g>
+
+
+<g>
+ <rect id="answer-orange" fill="orange" rx="10px" ry="10px"/>
+ <text id="answer-orange-text" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white">50</text> 
+</g>
+
+
+<g>
+ <rect id="answer-green" fill="green" rx="10px" ry="10px"/>
+ <text id="answer-green-text" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white">50</text> 
+</g>
+
+
+<g>
+ <circle id="timec" cx="10%" cy="40%" r="3%" fill="purple"/>
+ <text id="time" x="10%" y="40%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text> 
+ <text id="timet" x="10%" y="33%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="black">Time</text> 
+</g>
+
+
+<g>
+ <circle id="answersc" cx="50%" cy="40%" r="3%" fill="magenta"/>
+ <text id="answers" x="50%" y="40%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="white">0</text> 
+ <text id="answerst" x="50%" y="33%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="black">Answers</text> 
+</g>
+
+
+
+<g>
+ <circle id="questionnumc" cx="90%" cy="40%" r="3%" fill="blueviolet"/>
+ <text id="questionnum" x="90%" y="40%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="white"></text>
+ <text id="questionnumt" x="90%" y="33%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="black">Question</text>  
+</g>
+
+
+<!-- 
+Count-down screen before question starts
+-->
+
+<g>
+ <rect id="prequestr" width="100%" x="0%" fill="lightcoral" rx="0px" ry="0px"/>
+ <text id="prequest" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text>
+ 
+ <text id="place1" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text> 
+ <text id="place2" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text> 
+ <text id="place3" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text> 
+ <text id="place4" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text>  
+ <text id="place5" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; 
+font-weight="bold"; fill="white"></text>  
+ 
+</g>
+
+<g>
+ <circle id="timepc" cx="50%" cy="45%" r="3%" fill="purple"/>
+ <text id="timep" x="50%" y="45%" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new 
+roman"; font-weight="bold"; fill="white"></text> 
+</g>
+
+
+
+</svg>
+
+
+
+
+<div style="position:fixed">
+
+    <button type=“submit” id="gameexit" class="btn-hover color-9" style="font-size:25px;position:fixed">Exit Game</button>	
+
+<div>
+
+
+
+<div style="position:fixed">
+
+    <button type=“submit” id="nextquestion" class="btn-hover color-7" style="font-size:25px;position:fixed">Next Question</button>	
+
+<div>
+
+
+
+
+<!-- 
+Dummy button for signaling to Flask that the question timeout occurred
+<div class="buttons" style="position:absolute;top:-45%;margin-left:auto;margin-right:auto;margin-top:auto;margin-bottom:auto">
+
+-->
+
+<div style="position:fixed">
+
+<button type=“submit” id="question_timeout"></button>	
+	
+</div>
+
+
+<!-- 
+Dummy button for signaling to Flask that the pre-question timeout has occurred
+-->
+
+<div style="position:fixed">
+
+<button type=“submit” id="question_timeoutp"></button>	
+	
+</div>
+
+<!-- list of risults
+--> 
+<div align="center">
+
+<ul id= 'list' style="list-style-type:none">
+</ul>
+
+</div>
+
+
+
+
+ 
+<script type="text/javascript">
+	
+   var query = window.location.search.substring(1).split("&");
+
+
+   var game_pair = query[0].split('='); // The even part of each pair contains the type of variable, and the odd part the value
+   var pin_pair = query[1].split('=');	  
+   var quet_pair = query[2].split('=');	// Question time  
+   var playernum_pair = query[3].split('=');
+   var player1_pair = query[4].split('=');	  
+   var player2_pair = query[5].split('=');	
+   var player3_pair = query[6].split('=');	
+   var player4_pair = query[7].split('=');	   
+   var player5_pair = query[8].split('=');	
+   
+   // pair 0 : status
+
+   console.log("123");  
+
+   // Remove white space characters (inserted by flask)      		  
+   var game = decodeURI(game_pair[1].replace('+',' '));
+   var pin = decodeURI(pin_pair[1].replace('+',' '));
+   var question_time_org = decodeURI(quet_pair[1].replace('+',' '));
+   var playernum = decodeURI(playernum_pair[1].replace('+',' '));
+   var place1 = decodeURI(player1_pair[1].replace('+',' '));
+   var place2 = decodeURI(player2_pair[1].replace('+',' '));  
+   var place3 = decodeURI(player3_pair[1].replace('+',' '));
+   var place4 = decodeURI(player4_pair[1].replace('+',' '));
+   var place5 = decodeURI(player5_pair[1].replace('+',' '));   
+   
+   // Don't display dummy buttons
+   document.getElementById("question_timeout").style.display = "none";
+   document.getElementById("question_timeoutp").style.display = "none";
+   
+   document.getElementById("question_timeout").style.width = "0px";
+   document.getElementById("question_timeout").style.height = "0px";	
+   document.getElementById("question_timeout").style.top = "0px";
+   document.getElementById("question_timeout").style.left = "0px";   
+   
+   document.getElementById("question_timeoutp").style.width = "0px";
+   document.getElementById("question_timeoutp").style.height = "0px";	
+   document.getElementById("question_timeoutp").style.top = "0px";
+   document.getElementById("question_timeoutp").style.left = "0px";     
+   
+   
+   var question_time = question_time_org;
+   
+   document.getElementById("time").textContent = question_time;
+   document.getElementById("questionnum").textContent = "1";
+   
+   
+
+
+
+   var but_width = window.innerWidth/6;
+   var but_width_px = but_width + "px";
+
+   var but_height = window.innerHeight/20;
+   var but_height_px = but_height + "px"; 
+
+   var but1_top = window.innerHeight*(15/100);
+   var but1_left = window.innerWidth*(2/100);	
+   var but1_top_px = but1_top + "px";
+   var but1_left_px = but1_left + "px";
+	
+
+   document.getElementById("gameexit").style.width = but_width_px;
+   document.getElementById("gameexit").style.height = but_height_px;	
+   document.getElementById("gameexit").style.top = but1_top_px;
+   document.getElementById("gameexit").style.left = but1_left_px;
+
+   var but_nq_left = window.innerWidth*(1-20/100);
+   var but_nq_left_px = but_nq_left + "px";
+
+   document.getElementById("nextquestion").style.width = but_width_px;
+   document.getElementById("nextquestion").style.height = but_height_px;	
+   document.getElementById("nextquestion").style.top = but1_top_px;
+   document.getElementById("nextquestion").style.left = but_nq_left_px;
+
+   document.getElementById("nextquestion").style.display = "none";
+   document.getElementById("nextquestion").disabled = true;
+
+   //document.getElementById("nextquestion").style.display = "none";
+   //document.getElementById("nextquestion").disabled = true;
+   
+    var timeinterval;
+   
+   // Time countdown for question
+   function update_time () 
+   {
+     question_time = question_time -1;
+     document.getElementById("time").textContent = question_time;
+	 console.log("Question timeout");	
+     console.log(question_time);	
+		 
+	 if (question_time == 0)
+	 {
+	   console.log("9090");	
+	   clearInterval(timeinterval);
+	   document.getElementById("question_timeout").click();
+	 }
+	 	 
+   } // update_time
+ 
+
+
+   // Time out before question starts
+
+   question_timep = 5;
+   document.getElementById("timep").textContent = question_timep;
+   
+   
+   
+   
+   function update_timep () 
+   {
+     question_timep = question_timep -1;
+     document.getElementById("timep").textContent = question_timep;
+	 console.log("blabla");	
+     console.log(question_timep);	
+		 
+	 if (question_timep == 0)
+	 {
+	   clearInterval(timeintervalp);
+	   document.getElementById("question_timeoutp").click();
+	 }
+	 	 
+   } // update_time
+ 
+   var timeintervalp = setInterval(update_timep, 1000); // 1000ms = 1sec
+
+    
+
+var kah = document.getElementById("kahoot");
+kah.setAttribute('x',window.innerWidth/2);
+kah.setAttribute('y',window.innerHeight*(6/100));
+
+
+var quer = document.getElementById("questionr");
+quer.setAttribute('x',0);
+quer.setAttribute('y',window.innerHeight*(52/100));
+quer.setAttribute('height',window.innerHeight*(7/100));
+
+var que = document.getElementById("question");
+que.setAttribute('x',window.innerWidth/2);
+que.setAttribute('y',window.innerHeight*((52+3.5)/100));
+
+
+
+// Displayed before the question starts
+var pquer = document.getElementById("prequestr");
+pquer.setAttribute('x',0);
+pquer.setAttribute('y',window.innerHeight*(25/100));
+pquer.setAttribute('height',window.innerHeight*(70/100));
+
+var pque = document.getElementById("prequest");
+pque.setAttribute('x',window.innerWidth/2);
+pque.setAttribute('y',window.innerHeight*((35)/100));
+
+document.getElementById("prequest").textContent = "Question 1";
+
+// ---
+// Display the player names during "Results"
+
+// Disabled during question
+document.getElementById("place1").style.display = "none";
+document.getElementById("place2").style.display = "none";
+document.getElementById("place3").style.display = "none";
+document.getElementById("place4").style.display = "none";
+document.getElementById("place5").style.display = "none";
+
+var player_top = 45;
+var player_margin = 5;
+
+var py1 = document.getElementById("place1");
+py1.setAttribute('x',window.innerWidth/2);
+py1.setAttribute('y',window.innerHeight*((player_top)/100));
+
+var py2 = document.getElementById("place2");
+py2.setAttribute('x',window.innerWidth/2);
+py2.setAttribute('y',window.innerHeight*((player_top+1*player_margin)/100));
+
+var py3 = document.getElementById("place3");
+py3.setAttribute('x',window.innerWidth/2);
+py3.setAttribute('y',window.innerHeight*((player_top+2*player_margin)/100));
+
+var py4 = document.getElementById("place4");
+py4.setAttribute('x',window.innerWidth/2);
+py4.setAttribute('y',window.innerHeight*((player_top+3*player_margin)/100));
+
+var py5 = document.getElementById("place5");
+py5.setAttribute('x',window.innerWidth/2);
+py5.setAttribute('y',window.innerHeight*((player_top+4*player_margin)/100));
+
+
+
+
+// ----
+
+var quer = document.getElementById("gamepinr");
+quer.setAttribute('x',0);
+quer.setAttribute('y',window.innerHeight*(95/100));
+quer.setAttribute('height',window.innerHeight*(5/100));
+
+var que = document.getElementById("gamepin");
+que.setAttribute('x',window.innerWidth/2);
+que.setAttribute('y',window.innerHeight*((95+2.5)/100));
+
+var text1 = game + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + " PIN: " + pin; // xa0 is used for spaces (multiple spaces don't work!)
+document.getElementById("gamepin").textContent = text1; 
+	  
+var button_width = window.innerWidth/2 - 14;
+var button_height = window.innerHeight/6;
+var button_red_y = window.innerHeight*(60/100);
+var button_red_x = 10;
+var button_blue_x = window.innerWidth - button_width - button_red_x;
+var button_orange_y = button_red_y + button_height + 5; 
+
+
+console.log(button_red_y);
+
+document.getElementById("answer-red").style.width = button_width + "px";
+document.getElementById("answer-red").style.height = button_height + "px";
+document.getElementById("answer-red").style.x = button_red_x + "px";
+document.getElementById("answer-red").style.y = button_red_y + "px";
+
+
+
+var art = document.getElementById("answer-red-text");
+art.setAttribute('x',button_red_x+button_width/2);
+art.setAttribute('y',button_red_y+button_height/2);
+
+
+document.getElementById("answer-blue").style.width = button_width + "px";
+document.getElementById("answer-blue").style.height = button_height + "px";
+document.getElementById("answer-blue").style.x = button_blue_x + "px";
+document.getElementById("answer-blue").style.y = button_red_y + "px";
+
+
+var abt = document.getElementById("answer-blue-text");
+abt.setAttribute('x',button_blue_x+button_width/2);
+abt.setAttribute('y',button_red_y+button_height/2);
+
+
+
+document.getElementById("answer-orange").style.width = button_width + "px";
+document.getElementById("answer-orange").style.height = button_height + "px";
+document.getElementById("answer-orange").style.x = button_red_x + "px";
+document.getElementById("answer-orange").style.y = button_orange_y + "px";
+
+
+
+var aot = document.getElementById("answer-orange-text");
+aot.setAttribute('x',button_red_x+button_width/2);
+aot.setAttribute('y',button_orange_y+button_height/2);
+
+
+
+document.getElementById("answer-green").style.width = button_width + "px";
+document.getElementById("answer-green").style.height = button_height + "px";
+
+document.getElementById("answer-green").style.x = button_blue_x + "px";
+document.getElementById("answer-green").style.y = button_orange_y + "px";
+
+
+var agt = document.getElementById("answer-green-text");
+agt.setAttribute('x',button_blue_x+button_width/2);
+agt.setAttribute('y',button_orange_y+button_height/2);
+
+-->sort for results
+function sortNumber(a,b){
+return b.score-a.score;
+}
+
+
+function update_question (mode,question,question_num,answer1,answer2,answer3,answer4,score1,score2,score3,score4,score5)
+{
+
+  if (mode == 'prequestion')
+  {  
+ 
+   console.log('prequestion');
+
+   document.getElementById("place1").style.display = "none";
+   document.getElementById("place2").style.display = "none";
+   document.getElementById("place3").style.display = "none";
+   document.getElementById("place4").style.display = "none";
+   document.getElementById("place5").style.display = "none";
+
+ 
+   document.getElementById("nextquestion").style.display = "none";
+   document.getElementById("nextquestion").disabled = true;
+
+    document.getElementById("prequestr").style.display = "block";
+    document.getElementById("prequest").style.display = "block";
+
+    document.getElementById("prequest").textContent = "Question " + question_num;
+
+    document.getElementById("prequestr").style.fill = "lightcoral";
+
+    document.getElementById("timepc").style.display = "block";
+    document.getElementById("timep").style.display = "block";
+
+
+    question_timep = 5;
+    document.getElementById("timep").textContent = question_timep;
+
+    timeintervalp = setInterval(update_timep, 1000); // 1000ms = 1sec
+ 
+  }
+  else if (mode == 'question')
+  {
+    console.log('question');
+
+   question_time = question_time_org;
+
+
+    //document.getElementById("nextquestion").style.display = "none";
+
+   document.getElementById("nextquestion").style.display = "block";
+   document.getElementById("nextquestion").disabled = false;
+	
+    document.getElementById("prequestr").style.display = "none";
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("timepc").style.display = "none";
+    document.getElementById("timep").style.display = "none";
+
+    document.getElementById("question").textContent = question;
+    document.getElementById("answer-red-text").textContent = answer1;
+    document.getElementById("answer-blue-text").textContent = answer2;
+    document.getElementById("answer-orange-text").textContent = answer3;
+    document.getElementById("answer-green-text").textContent = answer4;
+
+    document.getElementById("answer-red-text").style.display = "block";
+    document.getElementById("answer-blue-text").style.display = "block";
+	document.getElementById("answer-orange-text").style.display = "block";
+	document.getElementById("answer-green-text").style.display = "block";
+
+    
+    timeinterval = setInterval(update_time, 1000);
+
+   }
+   else if (mode == 'done')
+   {
+      // All players have answered - emulate a "question timeout" button click
+
+      console.log('done');
+
+	  clearInterval(timeinterval);
+	  document.getElementById("question_timeout").click();
+
+    }
+	else if (mode == 'results')
+    {
+      // Show results
+
+      console.log('results');
+
+      document.getElementById("answer-red-text").style.display = "none";
+      document.getElementById("answer-blue-text").style.display = "none";
+	  document.getElementById("answer-orange-text").style.display = "none";
+	  document.getElementById("answer-green-text").style.display = "none";
+
+      document.getElementById("prequestr").style.fill = "lawngreen";
+      document.getElementById("prequestr").style.display = "block";
+
+      document.getElementById("prequest").style.display = "block";
+      document.getElementById("prequest").textContent = "Current Scores";
+
+      document.getElementById("place1").style.display = "block";
+      document.getElementById("place2").style.display = "block";
+      document.getElementById("place3").style.display = "block";
+      document.getElementById("place4").style.display = "block";
+      document.getElementById("place5").style.display = "block";
+	  
+	    if(playernum<5)
+		score5=0
+		if(playernum<4)
+		score4=0
+		if(playernum<3)
+		score3=0
+		if(playernum<2)
+		score2=0
+		
+	const winners= [{'player': place1,'score': score1}, {'player': place2,'score': score2},{'player': place3,'score': score3},{'player': place4,'score': score4},{'player': place5,'score': score5}]
+	
+	  winners.sort(sortNumber);
+	  
+	  if(winners[0].score!==0){
+	     document.getElementById("place1").textContent = winners[0].player+':'+winners[0].score;
+		 if(winners[1].score!==0){
+           document.getElementById("place2").textContent = winners[1].player+':'+winners[1].score;
+		   if(winners[2].score!==0){
+             document.getElementById("place3").textContent = winners[2].player+':'+winners[2].score;
+			 if(winners[3].score!==0){
+                document.getElementById("place4").textContent = winners[3].player+':'+winners[3].score;
+				if(winners[4].score!==0){
+	               document.getElementById("place5").textContent = winners[4].player+':'+winners[4].score;
+	  } }  }  }  }
+
+	  console.log(winners);
+	  
+
+    }	
+
+	
+	else if (mode == 'winTable')
+    {
+      // Show winTable
+      document.getElementById("nextquestion").style.display = "none";
+      document.getElementById("nextquestion").disabled = true;
+      
+	  console.log('winTable');
+
+      document.getElementById("answer-red-text").style.display = "none";
+      document.getElementById("answer-blue-text").style.display = "none";
+	  document.getElementById("answer-orange-text").style.display = "none";
+	  document.getElementById("answer-green-text").style.display = "none";
+
+      document.getElementById("prequestr").style.fill = "lawngreen";
+      document.getElementById("prequestr").style.display = "block";
+
+      document.getElementById("prequest").style.display = "block";
+      document.getElementById("prequest").textContent = "Final Scores";
+
+      document.getElementById("place1").style.display = "block";
+      document.getElementById("place2").style.display = "block";
+      document.getElementById("place3").style.display = "block";
+      document.getElementById("place4").style.display = "block";
+      document.getElementById("place5").style.display = "block";
+	  
+	    if(playernum<5)
+		score5=0
+		if(playernum<4)
+		score4=0
+		if(playernum<3)
+		score3=0
+		if(playernum<2)
+		score2=0
+		
+	const winners= [{'player': player1,'score': score1}, {'player': player2,'score': score2},{'player': player3,'score': score3},{'player': player4,'score': score4},{'player': player5,'score': score5}]
+	
+	  
+	  if(winners[0].score!==0){
+	     document.getElementById("place1").textContent = winners[0].player+':'+winners[0].score;
+		 if(winners[1].score!==0){
+           document.getElementById("place2").textContent = winners[1].player+':'+winners[1].score;
+		   if(winners[2].score!==0){
+             document.getElementById("place3").textContent = winners[2].player+':'+winners[2].score;
+			 if(winners[3].score!==0){
+                document.getElementById("place4").textContent = winners[3].player+':'+winners[3].score;
+				if(winners[4].score!==0){
+	               document.getElementById("place5").textContent = winners[4].player+':'+winners[4].score;
+	  } }  }  }  }
+	  console.log(winners);
+	  
+
+
+    }	
+ }// update_question
+
+
+
+
+</script>
+
+
+     
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script
+              src="http://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous"></script>
+			  
+	
+			  
+			  
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+	
+	
+
+	
+	
+	
+	
+	
+</body>
+</html>

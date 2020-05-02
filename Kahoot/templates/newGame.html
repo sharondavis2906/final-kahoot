@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Game</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+</head>
+
+<body>
+
+<!-- 
+No scroll bars
+-->
+
+
+<style>
+    html, body {
+        margin:0; padding:0; overflow: hidden;
+		height: 100%;
+		width: 100%;
+		display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+
+
+<svg width="100%" height="100%">
+
+
+<script>
+//--onload, onresize----
+function sizeSVG()
+{
+	var mySVG=document.getElementsByTagName("svg")[0]
+
+  	var svgW=window.innerWidth
+	var svgH=window.innerHeight
+
+	
+    mySVG.setAttribute("width",svgW)
+    mySVG.setAttribute("height",svgH)
+		
+	
+}
+
+document.addEventListener("onload",sizeSVG(),false)
+window.onresize=sizeSVG
+
+
+
+</script>
+import fs from 'fs'
+ 
+<svg preserveAspectRatio="xMidYMid meet"></svg>
+
+<svg>
+
+<g>
+<rect id="mainrect" width="100%" height="100%" fill="pink" rx="0" ry="0"/>
+<text id="create" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="80px"; font-style="italic"; font-family="times new roman"; font-weight="bold"; fill="yellow">Create your game!</text>     
+<text id="error" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="italic"; font-family="times new roman"; font-weight="bold"; fill="red"></text>
+</g> 
+ 
+</svg>
+
+
+<div style="position:fixed">
+
+    <input type="text" id="game1replace" placeholder={{game1_replaceName}} style="font-size:25px; text-align: center;position:fixed">
+
+<div>
+
+
+<div style="position:fixed">
+
+    <button type=“submit” id="enter1" class="btn-hover color-1" style="font-size:25px;position:fixed">Enter</button>	
+
+</div>
+
+<div style="position:fixed">
+
+    <input type="text" id="game2replace" placeholder={{game2_replaceName}} style="font-size:25px; text-align: center;position:fixed">
+
+<div>
+
+<div style="position:fixed">
+
+    <button type=“submit” id="enter2" class="btn-hover color-2" style="font-size:25px;position:fixed">Enter</button>	
+
+</div>
+
+<div style="position:fixed">
+
+    <input type="text" id="game3replace" placeholder={{game3_replaceName}} style="font-size:25px; text-align: center;position:fixed">
+
+<div>
+
+<div style="position:fixed">
+
+    <button type=“submit” id="enter3" class="btn-hover color-3" style="font-size:25px;position:fixed">Enter</button>	
+
+</div>
+
+<div style="position:fixed">
+
+    <input type="text" id="game4replace" placeholder={{game4_replaceName}} style="font-size:25px; text-align: center;position:fixed">
+
+<div>
+
+<div style="position:fixed">
+
+    <button type=“submit” id="enter4" class="btn-hover color-6" style="font-size:25px;position:fixed">Enter</button>	
+
+</div>
+
+<div style="position:fixed">
+
+    <button type=“submit” id="gameexit" class="btn-hover color-9" style="font-size:25px;position:fixed">Back to index</button>	
+
+<div>
+
+
+
+<script>
+
+var kah = document.getElementById("create");
+kah.setAttribute('x',window.innerWidth/2);
+kah.setAttribute('y',window.innerHeight*(6/100));
+
+
+	var mpin_width = window.innerWidth/6;
+    var mpin_width_px = mpin_width + "px";
+
+
+    var mpin_height = window.innerHeight/20;
+    var mpin_height_px = mpin_height + "px"; 
+
+
+	
+	var mpin_top = window.innerHeight/2;
+	var mpin_left = window.innerWidth/2 - mpin_width/2;	
+	var mpin_top_px = mpin_top + "px";
+	var mpin_left_px = mpin_left + "px";
+	
+
+	var err = document.getElementById("error");
+    err.setAttribute('x',window.innerWidth/2);
+    err.setAttribute('y',window.innerHeight*(20/100));
+
+    var but_width = window.innerWidth/6;
+    var but_width_px = but_width + "px";
+
+    var but_height = window.innerHeight/20;
+    var but_height_px = but_height + "px"; 
+
+	var but1_top = window.innerHeight/3;
+	var but1_left = window.innerWidth/2;	
+	var but1_top_px = but1_top + "px";
+	var but1_left_px = but1_left + "px";
+	
+	var but1input_left = window.innerWidth/2-but_width;
+	var but1input_left_px = but1input_left + "px";
+	
+	var but2_top = but1_top + but_height*3/2;
+	var but2_left = window.innerWidth/2;	
+	var but2_top_px = but2_top + "px";
+	var but2_left_px = but2_left + "px";	
+	
+	var but2input_left = window.innerWidth/2-but_width;
+	var but2input_left_px = but2input_left + "px";
+	
+	
+	var but3_top = but2_top + but_height*3/2;
+	var but3_left = window.innerWidth/2;	
+	var but3_top_px = but3_top + "px";
+	var but3_left_px = but3_left + "px";		
+	
+	var but3input_left = window.innerWidth/2-but_width;
+	var but3input_left_px = but3input_left + "px";
+	
+	var but4_top = but3_top + but_height*3/2;
+	var but4_left = window.innerWidth/2;	
+	var but4_top_px = but4_top + "px";
+	var but4_left_px = but4_left + "px";			
+	
+	var but4input_left = window.innerWidth/2-but_width;
+	var but4input_left_px = but4input_left + "px";
+	
+	var butExit_top = but1_top - but_height*3/2;
+	var butExit_left = window.innerWidth/4;	
+	var butExit_top_px = butExit_top + "px";
+	var butExit_left_px = butExit_left + "px";	
+
+	
+	document.getElementById("game1replace").style.width = mpin_width_px;
+	document.getElementById("game1replace").style.height = mpin_height_px;	
+	document.getElementById("game1replace").style.top = but1_top_px;
+	document.getElementById("game1replace").style.left = but1input_left_px;
+	
+	document.getElementById("game2replace").style.width = mpin_width_px;
+	document.getElementById("game2replace").style.height = mpin_height_px;	
+	document.getElementById("game2replace").style.top = but2_top_px;
+	document.getElementById("game2replace").style.left = but2input_left_px;
+	
+	document.getElementById("game3replace").style.width = mpin_width_px;
+	document.getElementById("game3replace").style.height = mpin_height_px;	
+	document.getElementById("game3replace").style.top = but3_top_px;
+	document.getElementById("game3replace").style.left = but3input_left_px;
+	
+	document.getElementById("game4replace").style.width = mpin_width_px;
+	document.getElementById("game4replace").style.height = mpin_height_px;	
+	document.getElementById("game4replace").style.top = but4_top_px;
+	document.getElementById("game4replace").style.left = but4input_left_px;
+	
+	document.getElementById("enter1").style.width = but_width_px;
+	document.getElementById("enter1").style.height = but_height_px;	
+	document.getElementById("enter1").style.top = but1_top_px;
+	document.getElementById("enter1").style.left = but1_left_px;
+
+	document.getElementById("enter2").style.width = but_width_px;
+	document.getElementById("enter2").style.height = but_height_px;	
+	document.getElementById("enter2").style.top = but2_top_px;
+	document.getElementById("enter2").style.left = but2_left_px;
+	
+	document.getElementById("enter3").style.width = but_width_px;
+	document.getElementById("enter3").style.height = but_height_px;	
+	document.getElementById("enter3").style.top = but3_top_px;
+	document.getElementById("enter3").style.left = but3_left_px;
+
+	document.getElementById("enter4").style.width = but_width_px;
+	document.getElementById("enter4").style.height = but_height_px;	
+	document.getElementById("enter4").style.top = but4_top_px;
+	document.getElementById("enter4").style.left = but4_left_px;	
+
+   document.getElementById("gameexit").style.width = but_width_px;
+   document.getElementById("gameexit").style.height = but_height_px;	
+   document.getElementById("gameexit").style.top = butExit_top_px;
+   document.getElementById("gameexit").style.left = butExit_left_px;
+ 
+
+function update_newGame (mode)
+{
+  if (mode == "badGameName")
+  {  console.log(767);
+     console.log(mode);
+     document.getElementById("error").textContent = "Please enter a valid game name";
+  }
+}
+
+
+</script>
+
+
+     
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script
+              src="http://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

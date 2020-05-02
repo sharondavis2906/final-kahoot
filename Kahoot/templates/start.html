@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+
+	
+</head>
+
+<body>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+
+<!-- 
+No scroll bars
+-->
+<style>
+
+
+
+    html, body {
+        margin:0; padding:0; overflow: hidden;
+		height: 100%;
+		width: 100%;
+		display: flex;
+        align-items: center;
+        justify-content: center;
+			
+    }
+	
+
+
+	
+</style>
+
+
+
+
+<svg width="100%" height="100%">
+
+
+<script>
+//--onload, onresize----
+function sizeSVG()
+{
+	var mySVG=document.getElementsByTagName("svg")[0]
+
+  	var svgW=window.innerWidth
+	var svgH=window.innerHeight
+
+    mySVG.setAttribute("width",svgW)
+    mySVG.setAttribute("height",svgH)
+		
+	
+}
+
+document.addEventListener("onload",sizeSVG(),false)
+window.onresize=sizeSVG
+
+
+
+</script>
+
+ 
+
+
+
+<svg>
+
+preserveAspectRatio="xMidYMid meet">
+
+<g>
+<rect width="100%" height="100%" fill="limegreen" rx="0" ry="0"/>
+<text id="kahoot" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="80px"; font-style="italic"; font-family="times new roman"; font-weight="bold"; fill="yellow">Kahoot!</text>  
+<text id="selectedGame" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; font-weight="bold"; fill="yellow"></text>  
+<text id="gamepin" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; font-weight="bold"; fill="yellow"></text>  
+<text id="playerlist" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; font-weight="bold"; fill="yellow"></text>  
+
+</g>
+
+
+
+<rect width="100%" height="1%" y="70%" fill="black" rx="0" ry="0"/>
+
+<g>
+<rect id="playersr" width="33.33%" fill="black" rx="10px" ry="10px"/>
+<text id="players" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; font-weight="bold"; fill="yellow">Waiting for players to join...</text>  
+</g>
+
+</svg>
+
+
+
+
+
+<div style="position:fixed">
+
+    <button type=“submit” id="gamestart" class="btn-hover color-8" style="font-size:25px;position:fixed">Start Game</button>	
+
+<div>
+
+
+<div style="position:fixed">
+
+    <button type=“submit” id="gameexit" class="btn-hover color-9" style="font-size:25px;position:fixed">Exit Game</button>	
+
+<div>
+
+
+
+      <script type="text/javascript">
+	
+	console.log(109);
+	//document.getElementById("gameexit").click(); 
+	
+
+var kah = document.getElementById("kahoot");
+kah.setAttribute('x',window.innerWidth/2);
+kah.setAttribute('y',window.innerHeight*(6/100));
+
+var sel = document.getElementById("selectedGame");
+sel.setAttribute('x',window.innerWidth/2);
+sel.setAttribute('y',window.innerHeight*(25/100));
+
+
+var gp = document.getElementById("gamepin");
+gp.setAttribute('x',window.innerWidth/2);
+gp.setAttribute('y',window.innerHeight*(35/100));
+
+
+var pl = document.getElementById("playerlist");
+pl.setAttribute('x',window.innerWidth/2);
+pl.setAttribute('y',window.innerHeight*(80/100));
+
+
+
+
+    var but_width = window.innerWidth/6;
+    var but_width_px = but_width + "px";
+
+    var but_height = window.innerHeight/20;
+    var but_height_px = but_height + "px"; 
+
+	var but1_top = window.innerHeight*(45/100);
+	var but1_left = window.innerWidth/2 - but_width/2;	
+	var but1_top_px = but1_top + "px";
+	var but1_left_px = but1_left + "px";
+	
+	var but2_top = but1_top + but_height*3/2;
+	var but2_left = window.innerWidth/2 - but_width/2;	
+	var but2_top_px = but2_top + "px";
+	var but2_left_px = but2_left + "px";	
+	
+	
+	document.getElementById("gamestart").style.width = but_width_px;
+	document.getElementById("gamestart").style.height = but_height_px;	
+	document.getElementById("gamestart").style.top = but1_top_px;
+	document.getElementById("gamestart").style.left = but1_left_px;
+
+	document.getElementById("gameexit").style.width = but_width_px;
+	document.getElementById("gameexit").style.height = but_height_px;	
+	document.getElementById("gameexit").style.top = but2_top_px;
+	document.getElementById("gameexit").style.left = but2_left_px;
+
+      // Start button diabled before players join
+      document.getElementById("gamestart").disabled = true;
+
+	
+      var query = window.location.search.substring(1).split("&");
+	  
+      var game_pair = query[0].split('='); // The even part of each pair contains the type of variable, and the odd part the value
+      var pin_pair = query[1].split('=');	  	  
+	  
+	  // Remove white space characters (inserted by flask)      		  
+	  var game = decodeURI(game_pair[1].replace('+',' '));
+	  var pin = decodeURI(pin_pair[1].replace('+',' '));
+	  
+	  var text1 = "You have selected the game " + game;
+	  
+
+      document.getElementById("selectedGame").textContent = text1;
+
+	  var text3 = "Players may join at http://127.0.0.1:5000/player using Game PIN " + pin;	  
+	  	  
+
+      document.getElementById("gamepin").textContent = text3;
+
+      // Display number of players
+
+
+var quer = document.getElementById("playersr");
+quer.setAttribute('x',window.innerWidth/3);
+quer.setAttribute('y',window.innerHeight*(67/100));
+quer.setAttribute('height',window.innerHeight*(7/100));
+
+var que = document.getElementById("players");
+que.setAttribute('x',window.innerWidth/2);
+que.setAttribute('y',window.innerHeight*((67+3)/100));
+
+
+console.log("Hi");
+
+// TEMP - add players 3,4,5
+function update_start (numplayers,player1,player2,player3,player4,player5)
+{
+
+  console.log(777);
+  console.log(numplayers);
+
+
+      //if (numplayers > 0)
+	  //{
+	  
+	    console.log(555);
+        var text5 = "Players joined: " + numplayers;
+		document.getElementById("gamestart").disabled = false;
+
+
+      console.log(666);
+      console.log(text5);
+
+
+      document.getElementById("players").textContent = text5;
+
+      // Display player names
+
+      var pnames="";
+
+      if (numplayers == 1)
+	  {
+	     pnames = player1;
+	  }
+	  else if (numplayers == 2)
+	  {
+	     
+		 pnames = player1 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player2;
+		 
+	  }
+	  else if (numplayers == 3)
+	  {
+	     
+		 pnames = player1 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player2 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player3;
+		 
+	  }
+	  else if (numplayers == 4)
+	  {
+	     
+		 pnames = player1 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player2 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player3 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player4;
+		 
+	  }
+	  else
+	  {
+	     pnames = player1 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player2 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player3 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player4 + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + player5; 
+	  
+	  }
+
+      document.getElementById("playerlist").textContent = pnames;
+
+} // update_start
+
+
+
+      </script>
+	  	  
+
+
+   
+
+	 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script
+              src="http://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
