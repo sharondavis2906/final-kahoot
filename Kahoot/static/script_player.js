@@ -3,10 +3,20 @@ $(document).ready(function() {
 	
 // ====================================================================================
 
+	var data = $.ajax({
+        url: "/static/configu.txt", 
+        dataType: "text",
+		async: false,
+        success: function (data) {
+            console.log(data)
+        }
+    }).responseText;
+	
+	console.log('data: ' + data);
 
 // Player page (enter PIN)
 
-   var socket_player = io.connect('http://127.0.0.1:5000/player');
+   var socket_player = io.connect(data+'/player');
 
 
     $('#gamepin').on('click', function() {

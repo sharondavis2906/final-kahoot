@@ -2,15 +2,6 @@
 <html lang="en">
 <head>
 
-<!-- 
-
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
-    <meta http-equiv="refresh" content="1">
-
--->
 
     <meta charset="UTF-8">
     <title>Game Master</title>
@@ -22,7 +13,6 @@
 <!-- 
 No scroll bars
 -->
-
 
 <style>
     html, body {
@@ -49,9 +39,6 @@ function sizeSVG()
   	var svgW=window.innerWidth
 	var svgH=window.innerHeight
 
-	//console.log(bbw);
-
-    //mySVG.setAttribute("viewBox",0+" "+0+" "+svgW+" "+svgH )
 	
     mySVG.setAttribute("width",svgW)
     mySVG.setAttribute("height",svgH)
@@ -67,8 +54,6 @@ window.onresize=sizeSVG
 </script>
 
  
-<svg preserveAspectRatio="xMidYMid meet"></svg>
-
 <svg>
 
 <g>
@@ -188,7 +173,10 @@ sel.setAttribute('y',window.innerHeight*(25/100));
 </script>
 
 
-     
+<!-- 
+call the jquery
+-->
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script

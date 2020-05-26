@@ -69,7 +69,6 @@ window.onresize=sizeSVG
 
 <svg>
 
-preserveAspectRatio="xMidYMid meet">
 
 <g>
 <rect width="100%" height="100%" fill="limegreen" rx="0" ry="0"/>
@@ -80,10 +79,16 @@ preserveAspectRatio="xMidYMid meet">
 
 </g>
 
+<!-- 
+The thin black line
+-->
 
 
 <rect width="100%" height="1%" y="70%" fill="black" rx="0" ry="0"/>
 
+<!-- 
+The middle black line
+-->
 <g>
 <rect id="playersr" width="33.33%" fill="black" rx="10px" ry="10px"/>
 <text id="players" dominant-baseline="middle" alignment-baseline="central" text-anchor="middle"; font-size="40px"; font-style="normal"; font-family="times new roman"; font-weight="bold"; fill="yellow">Waiting for players to join...</text>  
@@ -110,10 +115,7 @@ preserveAspectRatio="xMidYMid meet">
 
 
 
-      <script type="text/javascript">
-	
-	console.log(109);
-	//document.getElementById("gameexit").click(); 
+<script type="text/javascript">
 	
 
 var kah = document.getElementById("kahoot");
@@ -164,25 +166,31 @@ pl.setAttribute('y',window.innerHeight*(80/100));
 	document.getElementById("gameexit").style.top = but2_top_px;
 	document.getElementById("gameexit").style.left = but2_left_px;
 
-      // Start button diabled before players join
-      document.getElementById("gamestart").disabled = true;
 
+
+      // Start button diabled before players join
+    document.getElementById("gamestart").disabled = true;
+
+	
 	
       var query = window.location.search.substring(1).split("&");
 	  
       var game_pair = query[0].split('='); // The even part of each pair contains the type of variable, and the odd part the value
-      var pin_pair = query[1].split('=');	  	  
+      var pin_pair = query[1].split('=');		  	  
+  	  var ip_pair = query[2].split('=');
 	  
 	  // Remove white space characters (inserted by flask)      		  
-	  var game = decodeURI(game_pair[1].replace('+',' '));
-	  var pin = decodeURI(pin_pair[1].replace('+',' '));
+	
+	  var game = decodeURIComponent(game_pair[1].replace('+',' '));     
+	  var pin = decodeURIComponent(pin_pair[1].replace('+',' ')); 	  
+	  var ipAndPort = decodeURIComponent(ip_pair[1]);
+	  
 	  
 	  var text1 = "You have selected the game " + game;
-	  
 
       document.getElementById("selectedGame").textContent = text1;
 
-	  var text3 = "Players may join at http://127.0.0.1:5000/player using Game PIN " + pin;	  
+	  var text3 = "Players may join at "+ipAndPort+"/player using Game PIN " + pin;	  
 	  	  
 
       document.getElementById("gamepin").textContent = text3;
@@ -202,7 +210,6 @@ que.setAttribute('y',window.innerHeight*((67+3)/100));
 
 console.log("Hi");
 
-// TEMP - add players 3,4,5
 function update_start (numplayers,player1,player2,player3,player4,player5)
 {
 
@@ -210,8 +217,6 @@ function update_start (numplayers,player1,player2,player3,player4,player5)
   console.log(numplayers);
 
 
-      //if (numplayers > 0)
-	  //{
 	  
 	    console.log(555);
         var text5 = "Players joined: " + numplayers;
@@ -258,7 +263,7 @@ function update_start (numplayers,player1,player2,player3,player4,player5)
 
       document.getElementById("playerlist").textContent = pnames;
 
-} // update_start
+} 
 
 
 

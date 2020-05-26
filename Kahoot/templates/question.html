@@ -42,8 +42,6 @@ function sizeSVG()
   	var svgW=window.innerWidth
 	var svgH=window.innerHeight
 
-
-    //mySVG.setAttribute("viewBox",bbx+" "+bby+" "+svgW+" "+svgH )
 	
     mySVG.setAttribute("width",svgW)
     mySVG.setAttribute("height",svgH)
@@ -59,7 +57,6 @@ window.onresize=sizeSVG
 </script>
 
  
-<svg preserveAspectRatio="xMidYMid meet"></svg>
 
 <svg>
 
@@ -213,8 +210,6 @@ Dummy button for signaling to Flask that the pre-question timeout has occurred
 	
 </div>
 
-<!-- list of risults
---> 
 <div align="center">
 
 <ul id= 'list' style="list-style-type:none">
@@ -246,15 +241,15 @@ Dummy button for signaling to Flask that the pre-question timeout has occurred
    console.log("123");  
 
    // Remove white space characters (inserted by flask)      		  
-   var game = decodeURI(game_pair[1].replace('+',' '));
-   var pin = decodeURI(pin_pair[1].replace('+',' '));
-   var question_time_org = decodeURI(quet_pair[1].replace('+',' '));
+   var game = decodeURIComponent(game_pair[1].replace('+',' '));
+   var pin = decodeURIComponent(pin_pair[1].replace('+',' '));
+   var question_time_org = decodeURIComponent(quet_pair[1].replace('+',' '));
    var playernum = decodeURI(playernum_pair[1].replace('+',' '));
-   var place1 = decodeURI(player1_pair[1].replace('+',' '));
-   var place2 = decodeURI(player2_pair[1].replace('+',' '));  
-   var place3 = decodeURI(player3_pair[1].replace('+',' '));
-   var place4 = decodeURI(player4_pair[1].replace('+',' '));
-   var place5 = decodeURI(player5_pair[1].replace('+',' '));   
+   var place1 = decodeURIComponent(player1_pair[1].replace('+',' '));
+   var place2 = decodeURIComponent(player2_pair[1].replace('+',' '));  
+   var place3 = decodeURIComponent(player3_pair[1].replace('+',' '));
+   var place4 = decodeURIComponent(player4_pair[1].replace('+',' '));
+   var place5 = decodeURIComponent(player5_pair[1].replace('+',' '));   
    
    // Don't display dummy buttons
    document.getElementById("question_timeout").style.display = "none";
@@ -308,8 +303,6 @@ Dummy button for signaling to Flask that the pre-question timeout has occurred
    document.getElementById("nextquestion").style.display = "none";
    document.getElementById("nextquestion").disabled = true;
 
-   //document.getElementById("nextquestion").style.display = "none";
-   //document.getElementById("nextquestion").disabled = true;
    
     var timeinterval;
    
@@ -328,7 +321,7 @@ Dummy button for signaling to Flask that the pre-question timeout has occurred
 	   document.getElementById("question_timeout").click();
 	 }
 	 	 
-   } // update_time
+   }
  
 
 
@@ -353,7 +346,7 @@ Dummy button for signaling to Flask that the pre-question timeout has occurred
 	   document.getElementById("question_timeoutp").click();
 	 }
 	 	 
-   } // update_time
+   }
  
    var timeintervalp = setInterval(update_timep, 1000); // 1000ms = 1sec
 
@@ -541,9 +534,6 @@ function update_question (mode,question,question_num,answer1,answer2,answer3,ans
     console.log('question');
 
    question_time = question_time_org;
-
-
-    //document.getElementById("nextquestion").style.display = "none";
 
    document.getElementById("nextquestion").style.display = "block";
    document.getElementById("nextquestion").disabled = false;

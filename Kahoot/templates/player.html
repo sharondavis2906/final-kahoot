@@ -303,7 +303,7 @@ st.setAttribute('y',window.innerHeight*((botrow+3.5)/100));
 
 
 
-var button_width = window.innerWidth/2 - 30;
+var button_width = window.innerWidth/2 - window.innerWidth*(3/100);
 var button_width_px = button_width + "px";
 
 var button_height = window.innerHeight*(30/100);
@@ -380,8 +380,6 @@ var pque = document.getElementById("aprequest");
 pque.setAttribute('x',window.innerWidth/2);
 pque.setAttribute('y',window.innerHeight*((35)/100));
 
-//document.getElementById("aprequest").textContent = "Question " + question_num;
-
 
 
 // When Player page is first displayed the Answer section is hidden
@@ -434,12 +432,10 @@ pque.setAttribute('y',window.innerHeight*((35)/100));
 	 if (question_atimep == 0)
 	 {
 	   clearInterval(timeintervalap);
-	   //document.getElementById("question_timeoutp").click();
 	 }
 	 	 
    } // update_atimep
  
-
 
 
 
@@ -498,17 +494,6 @@ function update_player (mode,game,pin,player,score,numquestions,question_num)
 	console.log(999);
     document.getElementById("error").textContent = "The game had started! Be faster next time";  
 
-  }
- else if (mode == "tryAgain")
-  { 
-     document.getElementById("error").textContent = "Try Entering a different game!"; 
-	 document.getElementById("messagepin").disabled = false;
-     document.getElementById("gamepin").disabled = false;
-	 document.getElementById("messagepin").style.display = "block"; 
-	 document.getElementById("gamepin").style.display = "block";
-
-	 
-	 
   }
 
   else if (mode == "badname")

@@ -10,7 +10,6 @@ app.config['SECRET_KEY'] = 'secretkey'
 app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
-
 pinname = 0
 gamename = '' 
 numplayers = 0
@@ -21,6 +20,7 @@ correct_answer = 0
 game_selected = 0
 game_started = 0
 lines = []
+lines1 = []
 players = ['','','','','']
 playersid = ['','','','','']
 scores = [0,0,0,0,0]
@@ -49,6 +49,7 @@ def reset_vars():
   global game_selected
   global game_started
   global lines
+  global lines1
   global players
   global playersid
   global scores
@@ -56,17 +57,17 @@ def reset_vars():
   global numanswers
   global number
 
-
   pinname = 0
   gamename = '' 
   numplayers = 0
-  numquestions=10
+  numquestions=15
   question_num = 1
   question_time_val = 10
   correct_answer = 0
   game_selected = 0;
   game_started=0;
   lines = []
+  lines1 = []  
   players = ['','','','','']
   playersid = ['','','','','']
   scores = [0,0,0,0,0]
@@ -79,8 +80,6 @@ def reset_vars():
 @app.route('/')
 def index():
     return render_template('index.html', game1_name=game1_first_name,game2_name=game2_first_name,game3_name=game3_first_name,game4_name=game4_first_name )
-
-
 
 
 @app.route('/player')
@@ -119,8 +118,7 @@ def receive_message_from_user_newgame(message):
     print('USER MESSAGE FROM INDEX NEW GAME: {}'.format(message))
 
 	
-	
-    emit('redirect from flask to index', {'url': url_for('newGame')})
+    emit('redirect from flask to index', {'url': url_for('newGame')}, namespace='/')
 
 # Message from HTML/JS after selecting a game 
 @socketio.on('game selected', namespace='/')
@@ -131,6 +129,7 @@ def receive_message_from_user(message):
     global game_selected
     global gamename
     global lines
+    global lines1
     
     game_selected = 1
     
@@ -143,15 +142,20 @@ def receive_message_from_user(message):
     filep.close()
     gamename = lines[0]
     print('LINES INDEX: {}'.format(lines))
-    
     if len(lines) > 15*6+1:
-      print('ERROR!!! Too many lines in file {}'.format(fname))  
-        
+         print('ERROR!!! Too many lines in file {}'.format(fname))  
+	
+    filep = open("static/configu.txt", "r")
+    lines1 = filep.readlines()
+    filep.close()
+    ip = lines1[0]
+ 
     pinname= rand.randint(1000,9999)
     numplayers = 0
     
-    emit('redirect from flask to index', {'url': url_for('start',game=gamename,pin=pinname)}, namespace='/')
-    
+    emit('redirect from flask to index', {'url': url_for('start',game=gamename,pin=pinname, ipAndPort=ip)}, namespace='/')
+   
+	
 #----------------------start---------------------
 
 # Message from HTML/JS after pressing Game Exit on Start page
@@ -262,7 +266,7 @@ def receive_message_from_user(message):
     
       
       
-# Timeout before question has started      
+# Timeout question has started      
 @socketio.on('question timeoutp', namespace='/question')
 def receive_message_from_user(message):
     print('USER MESSAGE FROM PRE-QUESTION TIMEOUT: {}'.format(message))
@@ -307,7 +311,7 @@ def receive_message_from_user(message):
 
 
 
-# Timeout before question has ended      
+# next question
 @socketio.on('nextquestion', namespace='/question')
 def receive_message_from_user(message):
     print('USER MESSAGE FROM NEXT QUESTION: {}'.format(message))
@@ -374,7 +378,7 @@ def receive_message_from_user_gameChange(message):
 
 	# and write everything back
         with open('Trivia' + number + '.txt', 'w') as file:
-	    # now change the 2nd line, note that you have to add a newline
+
             data[0] = message[:-1] + '\n'
             file.writelines( data )
         numQues=1
@@ -479,7 +483,7 @@ def receive_message_from_user_join(message):
       if int(message) == int(pinname):  
           print(numplayers)
           if(numplayers>4):
-              print('ooooooooof')
+
               emit('message from flask to player', {'mode': 'tooManyPlayers'})
           elif game_started==1:
               emit('message from flask to player', {'mode': 'late2game'})
@@ -514,7 +518,7 @@ def receive_message_from_user_join(message):
       # Error
       emit('message from flask to player', {'mode': 'badname'})
     elif(numplayers>4):
-        print('ooooooooof')
+
         emit('message from flask to player', {'mode': 'tooManyPlayers'})
     elif game_started==1:
          emit('message from flask to player', {'mode': 'late2game'})
@@ -528,7 +532,7 @@ def receive_message_from_user_join(message):
       numplayers += 1
                  
       # Host
-      # Doesn't work without broadcast. Why?
+
       emit('message from flask to start',{'numplayers':numplayers,'player1':players[0],'player2':players[1],'player3':players[2],'player4':players[3],'player5':players[4]},broadcast=True,include_self=False,namespace='/start')
       
       # Players (sent to each player), message = player name
@@ -556,7 +560,7 @@ def receive_message_from_user_join(message):
     
     # Find the player whose ID was sent in the message    
     p=0
-    en=0
+    en=0 # ==enable- id not found
     while (p < numplayers) and (en == 0):
       
       
@@ -604,7 +608,7 @@ def receive_message_from_user_join(message):
       
       print('USER MESSAGE DONE: {}'.format(numanswers))
       
-      # Doesn't work without broadcast. Why?
+
       emit('message from flask to question',{'mode':'done'},broadcast=True,include_self=False,namespace='/question')
      
 

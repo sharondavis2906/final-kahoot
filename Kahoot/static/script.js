@@ -1,8 +1,27 @@
+
 $(document).ready(function() {
 
 // Index page
 
-    var socket = io.connect('http://127.0.0.1:5000');
+
+	var data = $.ajax({
+        url: "/static/configu.txt", 
+        dataType: "text",
+		async: false,
+        success: function (data) {
+            console.log(data)
+        }
+    }).responseText;
+	
+	console.log("data: " + data);
+
+
+
+
+
+// -------------------------------------------------------------------------
+// index page
+    var socket = io.connect(data);
 
 // Message to Flask when button is pressed
 
@@ -57,7 +76,7 @@ $(document).ready(function() {
 
 socket.on('redirect from flask to index', function (data) {
 
-	// Change page to "Start Page" after game selection
+	// Change page to "Start Page" after game selection/ new game
 		
     window.location = data.url;
  
@@ -67,7 +86,7 @@ socket.on('redirect from flask to index', function (data) {
 // -------------------------------------------------------------------------
 // Start page
 
-   var socket_start = io.connect('http://127.0.0.1:5000/start');
+   var socket_start = io.connect(data+'/start');
 
  
 
@@ -98,7 +117,6 @@ socket.on('redirect from flask to index', function (data) {
 
 socket_start.on('redirect from flask to start', function (data) {
 
-	// Exit game
 	
 		console.log(700);
 	
@@ -107,8 +125,6 @@ socket_start.on('redirect from flask to start', function (data) {
 });
 
 
-
-// TEMP - add players 3,4,5
 socket_start.on('message from flask to start', function (data) {
 	
 	console.log(99);
@@ -129,7 +145,7 @@ socket_start.on('message from flask to start', function (data) {
 // -------------------------------------------------------------------------
 // Question page 
 
-   var socket_question = io.connect('http://127.0.0.1:5000/question');
+   var socket_question = io.connect(data+'/question');
  
  
      // Dummy button to simulate timeout
@@ -208,7 +224,7 @@ socket_question.on('message from flask to question', function (data) {
 //-----------------------------------------
 //new game
 
- var socket_newGame = io.connect('http://127.0.0.1:5000/newGame');
+ var socket_newGame = io.connect(data+'/newGame');
  
  // Message from Flask
 
@@ -294,7 +310,7 @@ socket_newGame.on('redirect from flask to newGame', function (data) {
 
 //-----------------------------------------
 //new game questions
-var socket_newGameQuestions = io.connect('http://127.0.0.1:5000/newGameQuestions');
+var socket_newGameQuestions = io.connect(data+'/newGameQuestions');
 	// questionEnter button pressed
 
 socket_newGameQuestions.on('redirect from flask to newGameQuestions', function (data) {
